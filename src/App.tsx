@@ -1,9 +1,9 @@
-import { HomePage } from "./pages/home";
+import { CreateNotesPage } from "./pages/create-notes";
 
 export function App() {
   return (
     <>
-      <HomePage />
+      <CreateNotesPage />
     </>
   );
 }
