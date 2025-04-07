@@ -17,12 +17,14 @@ export function CreateNote() {
   } = useForm<Note>();
   const addNote = useNoteStore((state: any) => state.addNote);
 
-  const onSubmit = (data: Note) => {
+  const onSubmit = (data: Omit<Note, "id">) => {
     setIsLoading(true);
-    addNote(data);
-    toast.success("Note added successfully!");
-    setIsLoading(false);
-    reset();
+    setTimeout(() => {
+      addNote(data);
+      toast.success("Note added successfully!");
+      setIsLoading(false);
+      reset();
+    }, 2000);
   };
 
   return (
@@ -65,6 +67,7 @@ export function CreateNote() {
           type="submit"
           className="btn btn-primary hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-opacity-50"
           label={isLoading ? "Loading..." : "Create Note"}
+          disabled={isLoading}
         />
       </form>
     </div>
