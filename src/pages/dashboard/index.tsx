@@ -4,8 +4,12 @@ import useNoteStore from "../../store/useNoteStore";
 import { Note } from "../../types/note";
 import { useNavigate } from "react-router-dom";
 import { BiEdit } from "react-icons/bi";
-import { FaRegStar } from "react-icons/fa";
-import { MdOutlineMenuBook } from "react-icons/md";
+
+import {
+  MdOutlineMenuBook,
+  MdOutlineStarOutline,
+  MdOutlineStarPurple500,
+} from "react-icons/md";
 
 export function DashboardPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -78,24 +82,30 @@ export function DashboardPage() {
                     Created: {formatDate(note.createdAt)}
                   </small>
                   <small className="text-gray-600 block mb-4">
-                    Last Updated: {formatDate(note.updatedAt)}
+                    Last Updated: {formatDate(note.updatedAt || "not updated")}
                   </small>
                 </div>
                 <div className="flex flex-col gap-2">
                   <button
-                    className="bg-blue-500  px-1 py-1 text-2xl text-white rounded-md max-w-12"
-                    onClick={() => handleEditNote(note.id)}
+                    className={` px-1 py-1 text-2xl rounded-md max-w-12`}
+                    onClick={() =>
+                      useNoteStore.getState().toggleFavorite(note.id)
+                    }
                   >
-                    <FaRegStar />
+                    {note.isFavorite ? (
+                      <MdOutlineStarPurple500 className="text-amber-400" />
+                    ) : (
+                      <MdOutlineStarOutline className="text-gray-400" />
+                    )}
                   </button>
                   <button
-                    className="bg-blue-500  px-1 py-1 text-2xl text-white rounded-md max-w-12"
+                    className="  px-1 py-1 text-2xl text-blue-500 rounded-md max-w-12"
                     onClick={() => handleEditNote(note.id)}
                   >
                     <BiEdit />
                   </button>
                   <button
-                    className="bg-blue-500  px-1 py-1 text-2xl text-white rounded-md max-w-12"
+                    className="  px-1 py-1 text-2xl text-emerald-500 rounded-md max-w-12"
                     onClick={() => handleEditNote(note.id)}
                   >
                     <MdOutlineMenuBook />

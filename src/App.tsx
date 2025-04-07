@@ -15,7 +15,7 @@ export function App() {
             <Route path="/" element={<NoteListPage />} />
             <Route path="/notes" element={<DashboardPage />} />
             <Route path="/notes/create" element={<CreateNotesPage />} />
-            <Route path="/notes/:id" element={<EditeNotePage />} />
+            <Route path="/notes/:noteId" element={<EditeNotePage />} />
             <Route path="/favorites" element={<StarredNotesPage />} />
             <Route
               path="/settings"

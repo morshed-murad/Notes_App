@@ -12,7 +12,6 @@ export function NotesList({ searchTerm }: { searchTerm: string }) {
     });
   };
 
-
   const filteredNotes = notes.filter(
     (note: Note) =>
       note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -38,7 +37,7 @@ export function NotesList({ searchTerm }: { searchTerm: string }) {
               </small>
               <br />
               <small className="text-gray-600">
-                Last Updated: {formatDate(note.updatedAt)}
+                Last Updated: {formatDate(note.updatedAt || "not updated")}
               </small>
             </li>
           ))}

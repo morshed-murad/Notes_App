@@ -2,24 +2,38 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { Note } from "../types/note";
 
-const useNoteStore = create(
+interface NoteState {
+  notes: Note[];
+  addNote: (note: Omit<Note, "id" | "createdAt" | "updatedAt">) => void;
+  toggleFavorite: (id: string) => void;
+  updateNote: (id: string, updatedData: Partial<Note>) => void;
+}
+
+const useNoteStore = create<NoteState>()(
   persist(
     (set) => ({
-      notes: [] as Note[],
-      addNote: (note: Omit<Note, "id">) =>
-        set((state: any) => ({
+      notes: [],
+      addNote: (note) =>
+        set((state) => ({
           notes: [
             ...state.notes,
             {
               id: crypto.randomUUID(),
               ...note,
               createdAt: new Date().toISOString(),
+              isFavorite: false,
             },
           ],
         })),
-      updateNote: (id: string, updatedData: Partial<Note>) =>
-        set((state: any) => ({
-          notes: state.notes.map((note: Note) =>
+      toggleFavorite: (id) =>
+        set((state) => ({
+          notes: state.notes.map((note) =>
+            note.id === id ? { ...note, isFavorite: !note.isFavorite } : note
+          ),
+        })),
+      updateNote: (id, updatedData) =>
+        set((state) => ({
+          notes: state.notes.map((note) =>
             note.id === id
               ? { ...note, ...updatedData, updatedAt: new Date().toISOString() }
               : note
