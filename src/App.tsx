@@ -7,13 +7,19 @@ import { NoteListPage } from "./pages/list-note";
 import { Navbar } from "./components/navbar";
 import ViewNotePage from "./pages/view";
 import { ThemeTogglePage } from "./pages/them-toggle";
+import useDarkModeStore from "./store/useDarkModeStore";
 
 export function App() {
+  const { isDarkMode } = useDarkModeStore();
   return (
     <Router>
-      <div className="flex">
+      <div
+        className={`flex h-screen overflow-auto  ${
+          isDarkMode ? "bg-gray-900 text-white" : "bg-white text-black"
+        }`}
+      >
         <Navbar />
-        <div className="flex-grow p-4 md:p-8 mt-20">
+        <div className="flex-grow p-4 md:p-8 mt-20  ">
           <Routes>
             <Route path="/" element={<NoteListPage />} />
             <Route path="/notes" element={<DashboardPage />} />

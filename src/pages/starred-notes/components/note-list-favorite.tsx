@@ -36,21 +36,21 @@ export function NotesListFavorites({ searchTerm }: { searchTerm: string }) {
   };
 
   return (
-    <div>
+    <div className="pb-10">
       <h2 className="text-2xl font-bold mb-4">Your Notes</h2>
       {filteredNotes.length === 0 ? (
         <p className="text-gray-500">No notes available.</p>
       ) : (
-        <ul className="list-none p-0">
+        <ul className="flex flex-col p-0 gap-4">
           {filteredNotes.map((note: Note, index: number) => (
             <li
               key={index}
-              className="mb-2 p-2 border border-gray-300 rounded-lg flex justify-between items-start"
+              className="mb-2 p-2 border border-gray-300 rounded-lg flex justify-between items-start "
             >
               <div className="">
                 <h3 className="text-xl font-semibold">{note.title}</h3>
                 <p className="text-gray-700 font-medium">
-                  {truncateContent(note.content, 100)}
+                  {truncateContent(note.content, 30)}
                 </p>
                 <small className="text-gray-600 block mb-1">
                   Created: {formatDate(note.createdAt)}

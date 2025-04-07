@@ -55,7 +55,7 @@ export function DashboardPage() {
   };
 
   return (
-    <>
+    <div className="pb-10">
       <div className="flex justify-end gap-4 items-center ">
         <input
           type="text"
@@ -75,7 +75,7 @@ export function DashboardPage() {
         {filteredNotes.length === 0 ? (
           <p className="text-gray-500">No notes available.</p>
         ) : (
-          <ul className="list-none p-0">
+          <ul className="flex flex-col p-0 gap-4">
             {filteredNotes.map((note: Note, index: number) => (
               <li
                 key={index}
@@ -84,7 +84,7 @@ export function DashboardPage() {
                 <div className="">
                   <h3 className="text-xl font-semibold">{note.title}</h3>
                   <p className="text-gray-700 font-medium">
-                    {truncateContent(note.content, 100)}
+                    {truncateContent(note.content, 30)}
                   </p>
                   <small className="text-gray-600 block mb-1">
                     Created: {formatDate(note.createdAt)}
@@ -124,6 +124,6 @@ export function DashboardPage() {
           </ul>
         )}
       </div>
-    </>
+    </div>
   );
 }
