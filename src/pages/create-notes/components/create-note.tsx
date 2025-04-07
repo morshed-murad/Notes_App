@@ -6,9 +6,10 @@ import { Button } from "../../../components/button";
 import useNoteStore from "../../../store/useNoteStore";
 import { useState } from "react";
 import { toast, Toaster } from "sonner";
-
+import { useNavigate } from "react-router-dom";
 export function CreateNote() {
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -24,6 +25,7 @@ export function CreateNote() {
       toast.success("Note added successfully!");
       setIsLoading(false);
       reset();
+      navigate("/notes");
     }, 2000);
   };
 

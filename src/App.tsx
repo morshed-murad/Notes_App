@@ -5,6 +5,9 @@ import { EditeNotePage } from "./pages/edit-note";
 import { CreateNotesPage } from "./pages/create-notes";
 import { NoteListPage } from "./pages/list-note";
 import { Navbar } from "./components/navbar";
+import ViewNotePage from "./pages/view";
+import { ThemeTogglePage } from "./pages/them-toggle";
+
 export function App() {
   return (
     <Router>
@@ -16,11 +19,9 @@ export function App() {
             <Route path="/notes" element={<DashboardPage />} />
             <Route path="/notes/create" element={<CreateNotesPage />} />
             <Route path="/notes/:noteId" element={<EditeNotePage />} />
+            <Route path="/notes/:noteId/view" element={<ViewNotePage />} />
             <Route path="/favorites" element={<StarredNotesPage />} />
-            <Route
-              path="/settings"
-              element={<div>Settings - Theme Toggle</div>}
-            />
+            <Route path="/settings" element={<ThemeTogglePage />} />
           </Routes>
         </div>
       </div>

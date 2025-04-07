@@ -1,9 +1,9 @@
-
 import useNoteStore from "../../../store/useNoteStore";
 import { Note } from "../../../types/note";
-import { MdOutlineStarPurple500 } from "react-icons/md";
-
+import { MdOutlineMenuBook, MdOutlineStarPurple500 } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 export function NotesListFavorites({ searchTerm }: { searchTerm: string }) {
+  const navigate = useNavigate();
   const notes = useNoteStore((state: any) => state.notes);
 
   const formatDate = (dateString: string) => {
@@ -29,6 +29,10 @@ export function NotesListFavorites({ searchTerm }: { searchTerm: string }) {
       return words.slice(0, wordLimit).join(" ") + "...";
     }
     return content;
+  };
+
+  const handleViewNote = (id: string) => {
+    navigate(`/notes/${id}/view`);
   };
 
   return (
@@ -62,7 +66,13 @@ export function NotesListFavorites({ searchTerm }: { searchTerm: string }) {
                     useNoteStore.getState().toggleFavorite(note.id)
                   }
                 >
-                  <MdOutlineStarPurple500  />
+                  <MdOutlineStarPurple500 />
+                </button>
+                <button
+                  className="  px-1 py-1 text-2xl text-emerald-500 rounded-md max-w-12 cursor-pointer"
+                  onClick={() => handleViewNote(note.id)}
+                >
+                  <MdOutlineMenuBook />
                 </button>
               </div>
             </li>

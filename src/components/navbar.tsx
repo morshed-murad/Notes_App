@@ -1,4 +1,4 @@
-import { Link, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 
 export function Navbar() {
   return (
@@ -6,16 +6,36 @@ export function Navbar() {
       <nav className="bg-gray-800 text-white p-4 fixed top-0 left-0 w-full">
         <ul className="flex gap-4">
           <li>
-            <Link to="/">Home</Link>
+            <NavLink
+              to="/"
+              className={({ isActive }) => (isActive ? "text-blue-500" : "")}
+            >
+              Home
+            </NavLink>
           </li>
           <li>
-            <Link to="/notes">Dashboard</Link>
+            <NavLink
+              to="/notes"
+              className={({ isActive }) => (isActive ? "text-blue-500" : "")}
+            >
+              Dashboard
+            </NavLink>
           </li>
           <li>
-            <Link to="/favorites">Starred Notes</Link>
+            <NavLink
+              to="/favorites"
+              className={({ isActive }) => (isActive ? "text-blue-500" : "")}
+            >
+              Starred Notes
+            </NavLink>
           </li>
           <li>
-            <Link to="/settings">Settings</Link>
+            <NavLink
+              to="/settings"
+              className={({ isActive }) => (isActive ? "text-blue-500" : "")}
+            >
+              Settings
+            </NavLink>
           </li>
         </ul>
       </nav>

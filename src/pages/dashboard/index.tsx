@@ -43,8 +43,15 @@ export function DashboardPage() {
     return content;
   };
 
+  const handleAddNote = () => {
+    navigate(`/notes/create`);
+  };
   const handleEditNote = (id: string) => {
     navigate(`/notes/${id}`);
+  };
+
+  const handleViewNote = (id: string) => {
+    navigate(`/notes/${id}/view`);
   };
 
   return (
@@ -60,6 +67,7 @@ export function DashboardPage() {
         <Button
           label=" Add Note"
           className="bg-blue-500 text-white px-4 py-2 rounded-md max-w-40"
+          onClick={handleAddNote}
         />
       </div>
 
@@ -87,7 +95,7 @@ export function DashboardPage() {
                 </div>
                 <div className="flex flex-col gap-2">
                   <button
-                    className={` px-1 py-1 text-2xl rounded-md max-w-12`}
+                    className={` px-1 py-1 text-2xl rounded-md max-w-12 cursor-pointer`}
                     onClick={() =>
                       useNoteStore.getState().toggleFavorite(note.id)
                     }
@@ -99,14 +107,14 @@ export function DashboardPage() {
                     )}
                   </button>
                   <button
-                    className="  px-1 py-1 text-2xl text-blue-500 rounded-md max-w-12"
+                    className="  px-1 py-1 text-2xl text-blue-500 rounded-md max-w-12 cursor-pointer"
                     onClick={() => handleEditNote(note.id)}
                   >
                     <BiEdit />
                   </button>
                   <button
-                    className="  px-1 py-1 text-2xl text-emerald-500 rounded-md max-w-12"
-                    onClick={() => handleEditNote(note.id)}
+                    className="  px-1 py-1 text-2xl text-emerald-500 rounded-md max-w-12 cursor-pointer"
+                    onClick={() => handleViewNote(note.id)}
                   >
                     <MdOutlineMenuBook />
                   </button>
