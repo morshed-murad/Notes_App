@@ -1,15 +1,9 @@
-import { useState } from "react";
+import { useState, Suspense, lazy } from "react";
 import { Button } from "../../components/button";
 import useNoteStore from "../../store/useNoteStore";
 import { Note } from "../../types/note";
 import { useNavigate } from "react-router-dom";
-import { BiEdit } from "react-icons/bi";
-
-import {
-  MdOutlineMenuBook,
-  MdOutlineStarOutline,
-  MdOutlineStarPurple500,
-} from "react-icons/md";
+const NoteList = lazy(() => import("../../components/note/note-list"));
 
 export function DashboardPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -46,12 +40,17 @@ export function DashboardPage() {
   const handleAddNote = () => {
     navigate(`/notes/create`);
   };
+
   const handleEditNote = (id: string) => {
     navigate(`/notes/${id}`);
   };
 
   const handleViewNote = (id: string) => {
     navigate(`/notes/${id}/view`);
+  };
+
+  const handleSortNotes = (newNotes: Note[]) => {
+    useNoteStore.setState({ notes: newNotes });
   };
 
   return (
@@ -62,10 +61,10 @@ export function DashboardPage() {
           placeholder="Search notes by title or content"
           value={searchTerm}
           onChange={handleSearchChange}
-          className="w-full md:w-96  border border-gray-300 rounded-md  px-2 py-3"
+          className="w-full md:w-96 border border-gray-300 rounded-md px-2 py-3"
         />
         <Button
-          label=" Add Note"
+          label="Add Note"
           className="bg-blue-500 text-white px-4 py-2 rounded-md max-w-40"
           onClick={handleAddNote}
         />
@@ -75,53 +74,19 @@ export function DashboardPage() {
         {filteredNotes.length === 0 ? (
           <p className="text-gray-500">No notes available.</p>
         ) : (
-          <ul className="flex flex-col p-0 gap-4">
-            {filteredNotes.map((note: Note, index: number) => (
-              <li
-                key={index}
-                className="mb-2 p-2 border border-gray-300 rounded-lg flex justify-between items-center"
-              >
-                <div className="">
-                  <h3 className="text-xl font-semibold">{note.title}</h3>
-                  <p className="text-gray-700 font-medium">
-                    {truncateContent(note.content, 30)}
-                  </p>
-                  <small className="text-gray-600 block mb-1">
-                    Created: {formatDate(note.createdAt)}
-                  </small>
-                  <small className="text-gray-600 block mb-4">
-                    Last Updated: {formatDate(note.updatedAt || "not updated")}
-                  </small>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <button
-                    className={` px-1 py-1 text-2xl rounded-md max-w-12 cursor-pointer`}
-                    onClick={() =>
-                      useNoteStore.getState().toggleFavorite(note.id)
-                    }
-                  >
-                    {note.isFavorite ? (
-                      <MdOutlineStarPurple500 className="text-amber-400" />
-                    ) : (
-                      <MdOutlineStarOutline className="text-gray-400" />
-                    )}
-                  </button>
-                  <button
-                    className="  px-1 py-1 text-2xl text-blue-500 rounded-md max-w-12 cursor-pointer"
-                    onClick={() => handleEditNote(note.id)}
-                  >
-                    <BiEdit />
-                  </button>
-                  <button
-                    className="  px-1 py-1 text-2xl text-emerald-500 rounded-md max-w-12 cursor-pointer"
-                    onClick={() => handleViewNote(note.id)}
-                  >
-                    <MdOutlineMenuBook />
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <Suspense fallback={<div>Loading notes...</div>}>
+            <NoteList
+              notes={filteredNotes}
+              onEditNote={handleEditNote}
+              onViewNote={handleViewNote}
+              onToggleFavorite={(id: string) =>
+                useNoteStore.getState().toggleFavorite(id)
+              }
+              onSortNotes={handleSortNotes}
+              formatDate={formatDate}
+              truncateContent={truncateContent}
+            />
+          </Suspense>
         )}
       </div>
     </div>

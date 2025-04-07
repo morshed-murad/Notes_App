@@ -1,4 +1,4 @@
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useNoteStore from "../../store/useNoteStore";
 import { Note } from "../../types/note";
 import { BiArrowBack } from "react-icons/bi";
@@ -6,7 +6,6 @@ import { BiArrowBack } from "react-icons/bi";
 export default function ViewNotePage() {
   const { noteId } = useParams<{ noteId: string }>();
   const navigate = useNavigate();
-  const location = useLocation();
   const note = useNoteStore((state) =>
     state.notes.find((n: Note) => n.id === noteId)
   );
@@ -21,13 +20,7 @@ export default function ViewNotePage() {
   };
 
   const handleBack = () => {
-    if (location.state?.from === "/notes") {
-      navigate("/notes");
-    } else if (location.state?.from === "/favorites") {
-      navigate("/favorites");
-    } else {
-      navigate("/");
-    }
+    navigate(-1);
   };
 
   return (
