@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useNoteStore from "../../../store/useNoteStore";
@@ -7,6 +7,9 @@ import { TextArea } from "../../../components/inputs/TextArea";
 import { Button } from "../../../components/button";
 import { Note } from "../../../types/note";
 import { toast, Toaster } from "sonner";
+import { debounce } from "lodash";
+import useDarkModeStore from "../../../store/useDarkModeStore";
+import { BiArrowBack } from "react-icons/bi";
 
 export function EditNote() {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,6 +18,7 @@ export function EditNote() {
   const note = useNoteStore((state) =>
     state.notes.find((n: Note) => n.id === noteId)
   );
+  const { isDarkMode } = useDarkModeStore();
 
   const {
     register,
@@ -23,6 +27,8 @@ export function EditNote() {
     formState: { errors },
   } = useForm<Note>();
 
+  const updateNote = useNoteStore((state) => state.updateNote);
+
   useEffect(() => {
     if (note) {
       setValue("title", note.title);
@@ -30,18 +36,35 @@ export function EditNote() {
     }
   }, [note, setValue]);
 
-  const updateNote = useNoteStore((state) => state.updateNote);
+  const debouncedSave = useCallback(
+    debounce((data: Note) => {
+      setIsLoading(true);
+      updateNote(noteId as string, data);
+      toast.success("Note updated automatically!");
+      setIsLoading(false);
+      navigate("/notes");
+    }, 2000),
+    [noteId, updateNote]
+  );
 
   const onSubmit = (data: Note) => {
-    setIsLoading(true);
-    updateNote(noteId as string, data);
-    toast.success("Note updated successfully!");
-    setTimeout(() => navigate("/notes"), 2000);
-    setIsLoading(false);
+    debouncedSave(data);
+  };
+
+  useEffect(() => {
+    handleDarkMode();
+  }, [isDarkMode]);
+
+  const handleDarkMode = () => {
+    if (isDarkMode) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-5">
+    <div className="max-w-4xl mx-auto p-5 dark:text-slate-900">
       <Toaster
         closeButton
         className="text"
@@ -54,9 +77,16 @@ export function EditNote() {
           },
         }}
       />
+      <button
+        className="flex items-center gap-2 text-blue-500 font-bold border border-blue-500 rounded-md px-5 py-1 cursor-pointer"
+        onClick={() => navigate("/notes")}
+      >
+        <BiArrowBack />
+        Back
+      </button>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="space-y-8 bg-white shadow-lg rounded px-12 pt-8 pb-10 mb-5 mt-20"
+        className=" space-y-8 bg-white shadow-lg rounded px-12 pt-8 pb-10 mb-5 mt-20"
       >
         <h1 className="text-2xl font-bold mb-5">Edit Note</h1>
         <Input

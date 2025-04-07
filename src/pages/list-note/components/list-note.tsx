@@ -35,7 +35,7 @@ export function NotesList({ searchTerm }: { searchTerm: string }) {
   };
 
   const handleViewNote = (id: string) => {
-    navigate(`/notes/${id}/view`);
+    navigate(`/${id}/view`);
   };
   return (
     <div className="pb-10">

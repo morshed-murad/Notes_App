@@ -8,7 +8,9 @@ export function Navbar() {
           <li>
             <NavLink
               to="/"
-              className={({ isActive }) => (isActive ? "text-blue-500" : "")}
+              className={({ isActive }) =>
+                isActive ? "text-blue-500 font-bold" : ""
+              }
             >
               Home
             </NavLink>
@@ -16,7 +18,9 @@ export function Navbar() {
           <li>
             <NavLink
               to="/notes"
-              className={({ isActive }) => (isActive ? "text-blue-500" : "")}
+              className={({ isActive }) =>
+                isActive ? "text-blue-500 font-bold" : ""
+              }
             >
               Dashboard
             </NavLink>
@@ -24,7 +28,9 @@ export function Navbar() {
           <li>
             <NavLink
               to="/favorites"
-              className={({ isActive }) => (isActive ? "text-blue-500" : "")}
+              className={({ isActive }) =>
+                isActive ? "text-blue-500 font-bold" : ""
+              }
             >
               Starred Notes
             </NavLink>
@@ -32,7 +38,9 @@ export function Navbar() {
           <li>
             <NavLink
               to="/settings"
-              className={({ isActive }) => (isActive ? "text-blue-500" : "")}
+              className={({ isActive }) =>
+                isActive ? "text-blue-500 font-bold" : ""
+              }
             >
               Settings
             </NavLink>

@@ -4,12 +4,17 @@ import { Input } from "../../../components/inputs/inputs";
 import { TextArea } from "../../../components/inputs/TextArea";
 import { Button } from "../../../components/button";
 import useNoteStore from "../../../store/useNoteStore";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast, Toaster } from "sonner";
 import { useNavigate } from "react-router-dom";
+import useDarkModeStore from "../../../store/useDarkModeStore";
+import { BiArrowBack } from "react-icons/bi";
+
 export function CreateNote() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { isDarkMode } = useDarkModeStore();
+
   const {
     register,
     handleSubmit,
@@ -29,8 +34,20 @@ export function CreateNote() {
     }, 2000);
   };
 
+  useEffect(() => {
+    handleDarkMode();
+  }, [isDarkMode]);
+
+  const handleDarkMode = () => {
+    if (isDarkMode) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  };
+
   return (
-    <div className="max-w-4xl mx-auto p-5">
+    <div className="max-w-4xl mx-auto p-5 dark:text-slate-900">
       <Toaster
         closeButton
         className="text"
@@ -43,6 +60,13 @@ export function CreateNote() {
           },
         }}
       />
+      <button
+        className="flex items-center gap-2 text-blue-500 font-bold border border-blue-500 rounded-md px-5 py-1 cursor-pointer"
+        onClick={() => navigate("/notes")}
+      >
+        <BiArrowBack />
+        Back
+      </button>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="space-y-8 bg-white shadow-lg rounded px-12 pt-8 pb-10 mb-5 mt-20"

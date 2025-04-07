@@ -32,7 +32,7 @@ export function NotesListFavorites({ searchTerm }: { searchTerm: string }) {
   };
 
   const handleViewNote = (id: string) => {
-    navigate(`/notes/${id}/view`);
+    navigate(`/favorites/${id}/view`);
   };
 
   return (

@@ -26,6 +26,8 @@ export function App() {
             <Route path="/notes/create" element={<CreateNotesPage />} />
             <Route path="/notes/:noteId" element={<EditeNotePage />} />
             <Route path="/notes/:noteId/view" element={<ViewNotePage />} />
+            <Route path="/:noteId/view" element={<ViewNotePage />} />
+            <Route path="/favorites/:noteId/view" element={<ViewNotePage />} />
             <Route path="/favorites" element={<StarredNotesPage />} />
             <Route path="/settings" element={<ThemeTogglePage />} />
           </Routes>
