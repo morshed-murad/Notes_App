@@ -1,3 +1,4 @@
+// src/store/useNoteStore.ts
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { Note } from "../types/note";
@@ -6,7 +7,11 @@ interface NoteState {
   notes: Note[];
   addNote: (note: Omit<Note, "id" | "createdAt" | "updatedAt">) => void;
   toggleFavorite: (id: string) => void;
-  updateNote: (id: string, updatedData: Partial<Note>) => void;
+  updateNote: (
+    id: string,
+    updatedData: Partial<Omit<Note, "id" | "createdAt" | "updatedAt">>
+  ) => void;
+  setNotes: (notes: Note[]) => void;
 }
 
 const useNoteStore = create<NoteState>()(
@@ -39,6 +44,7 @@ const useNoteStore = create<NoteState>()(
               : note
           ),
         })),
+      setNotes: (notes) => set({ notes }),
     }),
     {
       name: "note-storage",

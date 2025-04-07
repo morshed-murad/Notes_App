@@ -1,7 +1,9 @@
+import { Suspense } from "react";
 import useNoteStore from "../../../store/useNoteStore";
 import { Note } from "../../../types/note";
-import { MdOutlineMenuBook, MdOutlineStarPurple500 } from "react-icons/md";
+
 import { useNavigate } from "react-router-dom";
+import NoteList from "../../../components/note/note-list";
 export function NotesListFavorites({ searchTerm }: { searchTerm: string }) {
   const navigate = useNavigate();
   const notes = useNoteStore((state: any) => state.notes);
@@ -35,50 +37,31 @@ export function NotesListFavorites({ searchTerm }: { searchTerm: string }) {
     navigate(`/favorites/${id}/view`);
   };
 
+  const handleSortNotes = (newNotes: Note[]) => {
+    useNoteStore.setState({ notes: newNotes });
+  };
+
   return (
     <div className="pb-10">
       <h2 className="text-2xl font-bold mb-4">Your Notes</h2>
-      {filteredNotes.length === 0 ? (
-        <p className="text-gray-500">No notes available.</p>
-      ) : (
-        <ul className="flex flex-col p-0 gap-4">
-          {filteredNotes.map((note: Note, index: number) => (
-            <li
-              key={index}
-              className="mb-2 p-2 border border-gray-300 rounded-lg flex justify-between items-start "
-            >
-              <div className="">
-                <h3 className="text-xl font-semibold">{note.title}</h3>
-                <p className="text-gray-700 font-medium">
-                  {truncateContent(note.content, 30)}
-                </p>
-                <small className="text-gray-600 block mb-1">
-                  Created: {formatDate(note.createdAt)}
-                </small>
-                <small className="text-gray-600 block mb-4">
-                  Last Updated: {formatDate(note.updatedAt || "not updated")}
-                </small>
-              </div>
-              <div className="flex flex-col gap-2">
-                <button
-                  className=" px-1 py-1 text-2xl text-amber-400 rounded-md max-w-12"
-                  onClick={() =>
-                    useNoteStore.getState().toggleFavorite(note.id)
-                  }
-                >
-                  <MdOutlineStarPurple500 />
-                </button>
-                <button
-                  className="  px-1 py-1 text-2xl text-emerald-500 rounded-md max-w-12 cursor-pointer"
-                  onClick={() => handleViewNote(note.id)}
-                >
-                  <MdOutlineMenuBook />
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
+      <div className="mt-4">
+        {filteredNotes.length === 0 ? (
+          <p className="text-gray-500">No notes available.</p>
+        ) : (
+          <Suspense fallback={<div>Loading notes...</div>}>
+            <NoteList
+              notes={filteredNotes}
+              onViewNote={handleViewNote}
+              onToggleFavorite={(id: string) =>
+                useNoteStore.getState().toggleFavorite(id)
+              }
+              onSortNotes={handleSortNotes}
+              formatDate={formatDate}
+              truncateContent={truncateContent}
+            />
+          </Suspense>
+        )}
+      </div>
     </div>
   );
 }

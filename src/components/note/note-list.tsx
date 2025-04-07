@@ -29,7 +29,7 @@ export default function NoteList({
   truncateContent,
 }: NoteListProps) {
   const handleDragEnd = (result: any) => {
-    if (!result.destination) return; 
+    if (!result.destination) return;
 
     const reorderedNotes = Array.from(notes);
     const [movedNote] = reorderedNotes.splice(result.source.index, 1);
@@ -54,7 +54,7 @@ export default function NoteList({
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
-                    className="mb-2 p-2 border border-gray-300 rounded-lg flex justify-between items-center"
+                    className="mb-2 p-2 border border-gray-300 rounded-lg flex justify-between items-start"
                   >
                     <div>
                       <h3 className="text-xl font-semibold">{note.title}</h3>
@@ -69,7 +69,7 @@ export default function NoteList({
                         {formatDate(note.updatedAt || "not updated")}
                       </small>
                     </div>
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-2 ">
                       <button
                         className="px-1 py-1 text-2xl rounded-md max-w-12 cursor-pointer"
                         onClick={() => onToggleFavorite?.(note.id)}
@@ -80,12 +80,15 @@ export default function NoteList({
                           <MdOutlineStarOutline className="text-gray-400" />
                         )}
                       </button>
-                      <button
-                        className="px-1 py-1 text-2xl text-blue-500 rounded-md max-w-12 cursor-pointer"
-                        onClick={() => onEditNote?.(note.id)}
-                      >
-                        <BiEdit />
-                      </button>
+                      {onEditNote && (
+                        <button
+                          className="px-1 py-1 text-2xl text-blue-500 rounded-md max-w-12 cursor-pointer"
+                          onClick={() => onEditNote?.(note.id)}
+                        >
+                          <BiEdit />
+                        </button>
+                      )}
+
                       <button
                         className="px-1 py-1 text-2xl text-emerald-500 rounded-md max-w-12 cursor-pointer"
                         onClick={() => onViewNote?.(note.id)}
