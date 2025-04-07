@@ -3,7 +3,7 @@ import { NotesManager } from "./components/note-manage";
 export function ThemeTogglePage() {
   const { isDarkMode, toggleDark, toggleLight } = useDarkModeStore();
   return (
-    <div>
+    <div className="pb-10">
       <h1
         className={`text-2xl font-bold ${
           isDarkMode ? "bg-gray-900 text-white" : "bg-white text-black"
@@ -29,7 +29,9 @@ export function ThemeTogglePage() {
           <div className="w-full h-12 bg-slate-400 rounded-4xl"></div>
         </div>
       </div>
-      <NotesManager />
+      <div className="mt-10">
+        <NotesManager />
+      </div>
     </div>
   );
 }

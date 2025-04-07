@@ -46,13 +46,15 @@ export function NotesManager() {
   };
 
   return (
-    <div>
+    <div className="flex flex-col gap-4 mt-12 max-w-2xl mx-auto">
+      <h1 className="text-2xl font-bold my-10">Export Notes</h1>
       <button
         className="bg-blue-500 text-white px-4 py-2 rounded-md"
         onClick={() => exportNotes(notes)}
       >
         Export Notes
       </button>
+      <h1 className="text-2xl font-bold my-10">Import Notes</h1>
       <input
         className="bg-blue-500 text-white px-4 py-2 rounded-md"
         type="file"

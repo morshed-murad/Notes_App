@@ -47,7 +47,7 @@ export function CreateNote() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-5 dark:text-slate-900">
+    <div className=" p-5 dark:text-slate-900">
       <Toaster
         closeButton
         className="text"
@@ -69,7 +69,7 @@ export function CreateNote() {
       </button>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="space-y-8 bg-white shadow-lg rounded px-12 pt-8 pb-10 mb-5 mt-20"
+        className="space-y-8 bg-white shadow-lg rounded px-12 pt-8 pb-10 mb-5 mt-20 max-w-4xl mx-auto"
       >
         <h1 className="text-2xl font-bold mb-5">Create new Notes</h1>
         <Input
