@@ -3,7 +3,7 @@ import { Note } from "../../../types/note";
 import { useNavigate } from "react-router-dom";
 import NoteList from "../../../components/note/note-list";
 import { Suspense, useEffect } from "react";
-import { toast } from "sonner";
+import { toast, Toaster } from "sonner";
 
 export function NotesList({ searchTerm }: { searchTerm: string }) {
   const navigate = useNavigate();
@@ -45,15 +45,27 @@ export function NotesList({ searchTerm }: { searchTerm: string }) {
   }, [filteredNotes]);
 
   const handleNavigate = () => {
-    setTimeout(() => {
-      if (filteredNotes.length === 0) {
-        toast.error("No notes available.");
+    if (filteredNotes.length === 0) {
+      toast.error("No notes available.");
+      setTimeout(() => {
         navigate("/notes/create");
-      }
-    }, 1000);
+      }, 2000);
+    }
   };
   return (
     <div className="pb-10">
+      <Toaster
+        closeButton
+        className="text"
+        position="top-right"
+        toastOptions={{
+          style: {
+            border: "1px solid red",
+            padding: "16px",
+            color: "red",
+          },
+        }}
+      />
       <h2 className="text-2xl font-bold mb-4">Your Notes</h2>
       <div className="mt-4">
         {filteredNotes.length === 0 ? (
