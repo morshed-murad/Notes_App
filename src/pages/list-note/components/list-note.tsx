@@ -2,7 +2,8 @@ import useNoteStore from "../../../store/useNoteStore";
 import { Note } from "../../../types/note";
 import { useNavigate } from "react-router-dom";
 import NoteList from "../../../components/note/note-list";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
+import { toast } from "sonner";
 
 export function NotesList({ searchTerm }: { searchTerm: string }) {
   const navigate = useNavigate();
@@ -37,6 +38,19 @@ export function NotesList({ searchTerm }: { searchTerm: string }) {
 
   const handleSortNotes = (newNotes: Note[]) => {
     useNoteStore.setState({ notes: newNotes });
+  };
+
+  useEffect(() => {
+    handleNavigate();
+  }, [filteredNotes]);
+
+  const handleNavigate = () => {
+    setTimeout(() => {
+      if (filteredNotes.length === 0) {
+        toast.error("No notes available.");
+        navigate("/notes/create");
+      }
+    }, 1000);
   };
   return (
     <div className="pb-10">

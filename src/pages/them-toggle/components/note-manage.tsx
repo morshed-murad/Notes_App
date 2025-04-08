@@ -46,7 +46,7 @@ export function NotesManager() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full px-4 py-8">
+    <div className="flex flex-col items-center justify-center w-full sm:px-4 py-8">
       <h1 className="text-2xl font-bold my-4 md:text-3xl">Manage Your Notes</h1>
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"

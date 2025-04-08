@@ -19,7 +19,7 @@ export function App() {
         }`}
       >
         <Navbar />
-        <div className="flex-grow p-4 md:p-8 mt-20  ">
+        <div className="flex-grow  p-2sm:p-4 md:p-8 mt-20  ">
           <Routes>
             <Route path="/" element={<NoteListPage />} />
             <Route path="/notes" element={<DashboardPage />} />
