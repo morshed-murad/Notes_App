@@ -46,7 +46,7 @@ export function NotesManager() {
   };
 
   return (
-    <div className="flex flex-col gap-4 mt-12 max-w-2xl mx-auto">
+    <div className="flex flex-col gap-4 mt-12 w-full px-5 md:px-0 md:max-w-2xl mx-auto">
       <h1 className="text-2xl font-bold my-10">Export Notes</h1>
       <button
         className="bg-blue-500 text-white px-4 py-2 rounded-md"
