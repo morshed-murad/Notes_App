@@ -46,17 +46,20 @@ export function NotesManager() {
   };
 
   return (
-    <div className="flex flex-col gap-4 mt-12 w-full px-5 md:px-0 md:max-w-2xl mx-auto">
-      <h1 className="text-2xl font-bold my-10">Export Notes</h1>
+    <div className="flex flex-col items-center justify-center w-full px-4 py-8">
+      <h1 className="text-2xl font-bold my-4 md:text-3xl">Manage Your Notes</h1>
       <button
-        className="bg-blue-500 text-white px-4 py-2 rounded-md"
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
         onClick={() => exportNotes(notes)}
       >
         Export Notes
       </button>
-      <h1 className="text-2xl font-bold my-10">Import Notes</h1>
       <input
-        className="bg-blue-500 text-white px-4 py-2 rounded-md"
+        className="mt-4 file:mr-4 file:py-2 file:px-4
+                   file:rounded file:border-0
+                   file:text-sm file:font-semibold
+                   file:bg-blue-50 file:text-blue-700
+                   hover:file:bg-blue-100"
         type="file"
         accept=".json"
         onChange={handleImport}
